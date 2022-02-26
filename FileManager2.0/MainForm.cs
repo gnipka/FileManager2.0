@@ -74,7 +74,7 @@ namespace FileManager2._0
         }
         public void ChangeInfoAboutDir()
         {
-            var text = $"Расположение: {_Directory.FullName} {Environment.NewLine} Размер папки: {_Directory.Size / (1024 * 1024)} Мб" +
+            var text = $"Расположение: {_Directory.FullName} {Environment.NewLine} Размер папки: {_Directory.Size / 1024} Кб" +
                 $"{Environment.NewLine} Время создания: {_Directory.CreationTime:d} {Environment.NewLine} Количество папок: {_Directory.CountDir} " +
                 $"{Environment.NewLine} Количество файлов: {_Directory.CountFile}";
             InfoDir.Text = text;
@@ -128,6 +128,10 @@ namespace FileManager2._0
                             $"Количество символов(без пробела) {file.GetCountSymbolsWithoutGap()}";
                     }
                     InfoFile.Text = text;
+                }
+                else
+                {
+                    InfoFile.Text = String.Empty;
                 }
             }
         }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace FileManager2._0
 {
@@ -14,11 +15,6 @@ namespace FileManager2._0
     }
     internal abstract class FileSystemItemModel
     {
-        /// <summary>
-        /// Функция копирования
-        /// </summary>
-        /// <param name="destFile"></param>
-        public abstract void Copy(string destFile);
     }
     internal class FileModel : FileSystemItemModel
     {
@@ -33,9 +29,37 @@ namespace FileManager2._0
 
         public FileModel(string FilePath) : this(new FileInfo(FilePath)) { }
 
-        public override void Copy(string destFileName)
+        public void Copy(string destFileName, out string errorMsg)
         {
-            File.Copy(_File.FullName, destFileName);
+            try
+            {
+                File.Copy(FullName, destFileName);
+                errorMsg = null;
+            }
+            catch(UnauthorizedAccessException)
+            {
+                errorMsg = "Нет доступа к директории для записи файла";
+            }
+            catch (ArgumentException)
+            {
+                errorMsg = "Все поля должны быть заполнены";
+            }
+            catch (DirectoryNotFoundException)
+            {
+                errorMsg = "Указан недопустимый путь";
+            }
+            catch(FileNotFoundException)
+            {
+                errorMsg = "Не удалось найти " + FullName;
+            }
+            catch(IOException)
+            {
+                errorMsg = destFileName + " существует";
+            }
+            catch (NotSupportedException)
+            {
+                errorMsg = "Заданные параметры имеют недопустимый формат";
+            }
         }
 
         public FileModel(FileInfo File) => _File = File;
@@ -188,10 +212,49 @@ namespace FileManager2._0
                 }
         }
 
-        public override void Copy(string targetPath)
+        public void Copy(string destPath, ref string errorMsg, string sourceDir= null)
         {
-            Directory.CreateDirectory(targetPath);
-            //File.Copy(sourceFile, destFile, true);
+            if (sourceDir is null)
+            {
+                sourceDir = FullName;
+            }
+            Directory.CreateDirectory(destPath);
+            foreach (string s1 in Directory.GetFiles(sourceDir))
+            {
+                string s2 = destPath + "\\" + Path.GetFileName(s1);
+                try
+                {
+                    File.Copy(s1, s2);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    errorMsg = "Нет доступа к директории для записи файла";
+                }
+                catch (ArgumentException)
+                {
+                    errorMsg = "Все поля должны быть заполнены";
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    errorMsg = "Указан недопустимый путь";
+                }
+                catch (FileNotFoundException)
+                {
+                    errorMsg = "Не удалось найти " + FullName;
+                }
+                catch (IOException)
+                {
+                    errorMsg = s2 + " существует";
+                }
+                catch (NotSupportedException)
+                {
+                    errorMsg = "Заданные параметры имеют недопустимый формат";
+                }
+            }
+            foreach (string s in Directory.GetDirectories(sourceDir))
+            {
+                Copy(s, ref errorMsg, destPath + "\\" + Path.GetFileName(s));
+            }
         }
     }
 }

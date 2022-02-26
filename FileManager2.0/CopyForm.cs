@@ -18,41 +18,44 @@ namespace FileManager2._0
 
         private void DestFile_MouseClick(object sender, MouseEventArgs e)
         {
-            DestFile.Text = String.Empty;
+            DestFile.Text = null;
         }
 
         private void btCopy_Click(object sender, EventArgs e)
         {
             var destName = DestFile.Text.Trim();
+
             if (File.Exists(_FileName))
             {
+                string errorMsg = null;
                 var file = new FileModel(_FileName);
-                try
+                file.Copy(destName, out errorMsg);
+
+                if (errorMsg is null)
                 {
-                    file.Copy(destName);
                     MessageBox.Show($"Копирование прошло успешно! {Environment.NewLine}Путь к новому файлу: {destName}",
                         "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                 }
-                catch (IOException ex)
-                {
-                    MessageBox.Show(ex.Message, "Произошла ошибка при копировании файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
+                MessageBox.Show(errorMsg, "Произошла ошибка при копировании файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             else if (Directory.Exists(_FileName))
             {
-
+                string errorMsg = null;
                 var dir = new DirectoryModel(_FileName);
-                try
+                dir.Copy(destName, ref errorMsg);
+
+                if (errorMsg is null)
                 {
-                    dir.Copy(destName);
                     MessageBox.Show($"Копирование прошло успешно! {Environment.NewLine}Путь к новому файлу: {destName}",
                         "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                 }
-                catch (IOException ex)
+                else
                 {
-                    MessageBox.Show(ex.Message, "Произошла ошибка при копировании файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(errorMsg, "Произошли ошибки при копировании директории", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -64,3 +67,4 @@ namespace FileManager2._0
         }
     }
 }
+
