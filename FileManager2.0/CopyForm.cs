@@ -13,6 +13,7 @@ namespace FileManager2._0
             _FileName = fileName;
             SourceFile.Text = _FileName;
             ToolTip t = new ToolTip();
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             t.SetToolTip(DestFile, "Укажите полный путь к файлу (вместе с его новым именем и расширением)");
         }
 

@@ -44,9 +44,9 @@ namespace FileManager2._0
             this.SearchMask = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.RenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.DirsTable)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -183,38 +183,39 @@ namespace FileManager2._0
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RenameToolStripMenuItem,
+            this.CopyToolStripMenuItem,
             this.MoveToolStripMenuItem,
-            this.RemoveToolStripMenuItem,
-            this.CopyToolStripMenuItem});
+            this.RemoveToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(241, 165);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(215, 132);
             // 
             // RenameToolStripMenuItem
             // 
             this.RenameToolStripMenuItem.Name = "RenameToolStripMenuItem";
-            this.RenameToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.RenameToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
             this.RenameToolStripMenuItem.Text = "Переименовать";
+            // 
+            // CopyToolStripMenuItem
+            // 
+            this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
+            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
+            this.CopyToolStripMenuItem.Text = "Копировать";
+            this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
             // MoveToolStripMenuItem
             // 
             this.MoveToolStripMenuItem.Name = "MoveToolStripMenuItem";
-            this.MoveToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.MoveToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
             this.MoveToolStripMenuItem.Text = "Переместить";
             // 
             // RemoveToolStripMenuItem
             // 
             this.RemoveToolStripMenuItem.Name = "RemoveToolStripMenuItem";
-            this.RemoveToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.RemoveToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
             this.RemoveToolStripMenuItem.Text = "Удалить";
+            this.RemoveToolStripMenuItem.Click += new System.EventHandler(this.RemoveToolStripMenuItem_Click);
             // 
-            // CopyToolStripMenuItem
-            // 
-            this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
-            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
-            this.CopyToolStripMenuItem.Text = "Копировать";
-            this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
-            // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -229,7 +230,8 @@ namespace FileManager2._0
             this.Controls.Add(this.FilePath);
             this.Controls.Add(this.Mask);
             this.Controls.Add(this.DirsTable);
-            this.Name = "Form1";
+            this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.DirsTable)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);

@@ -61,6 +61,25 @@ namespace FileManager2._0
                 errorMsg = "Заданные параметры имеют недопустимый формат";
             }
         }
+        public void Remove(ref string errorMsg)
+        {
+            try
+            {
+                File.Delete(FullName);
+            }
+            catch (ArgumentException)
+            {
+                errorMsg = $"Путь к файлу {FullName} указан некорректно";
+            }
+            catch (IOException)
+            {
+                errorMsg = $"Файл {FullName} используется системой";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                errorMsg = $"Нет доступа к файлу {FullName}";
+            }
+        }
 
         public FileModel(FileInfo File) => _File = File;
         /// <summary>
@@ -254,6 +273,25 @@ namespace FileManager2._0
             foreach (string s in Directory.GetDirectories(sourceDir))
             {
                 Copy(s, ref errorMsg, destPath + "\\" + Path.GetFileName(s));
+            }
+        }
+        public void Remove(ref string errorMsg)
+        {
+            try
+            {
+                Directory.Delete(FullName, true);
+            }
+            catch (ArgumentException)
+            {
+                errorMsg = $"Путь к файлу {FullName} указан некорректно";
+            }
+            catch (IOException)
+            {
+                errorMsg = $"Директория {FullName} используется системой";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                errorMsg = $"Нет доступа к директории {FullName}";
             }
         }
     }

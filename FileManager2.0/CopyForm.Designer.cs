@@ -95,6 +95,7 @@ namespace FileManager2._0
             this.Controls.Add(this.btCopy);
             this.Controls.Add(this.label1);
             this.Name = "CopyForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Копирование";
             this.ResumeLayout(false);
             this.PerformLayout();

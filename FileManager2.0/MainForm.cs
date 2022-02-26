@@ -36,6 +36,7 @@ namespace FileManager2._0
             _Directory = new DirectoryModel(_Path);
             buttonDown.FlatAppearance.BorderSize = 0;
             buttonDown.FlatStyle = FlatStyle.Flat;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             UpdateInfo();
         }
 
@@ -188,6 +189,41 @@ namespace FileManager2._0
 
             CopyForm copyForm = new CopyForm(fileName);
             copyForm.Show();
+        }
+
+        private void RemoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fileName = Path.Combine(_Directory.FullName, clickedCell.Value.ToString());
+            if (File.Exists(fileName))
+            {
+                var file = new FileModel(fileName);
+                string errorMsg = null;
+                file.Remove(ref errorMsg);
+                if(errorMsg is null)
+                {
+                    MessageBox.Show($"Файл успешно удален!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(errorMsg, "Произошли ошибки при удалении файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                ChangeDataGrid();
+            }
+            else if (Directory.Exists(fileName))
+            {
+                var dir = new DirectoryModel(fileName);
+                string errorMsg = null;
+                dir.Remove(ref errorMsg);
+                if (errorMsg is null)
+                {
+                    MessageBox.Show($"Директория успешно удален!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(errorMsg, "Произошли ошибки при удалении директории", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                ChangeDataGrid();
+            }
         }
     }
 }
