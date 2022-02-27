@@ -26,6 +26,13 @@ namespace FileManager2._0
         /// </summary>
         /// <param name="newName">Новое имя файла</param>
         public abstract void Rename(string newName, ref string errorMsg);
+
+        /// <summary>
+        /// Перемещение
+        /// </summary>
+        /// <param name="newPath">Новый путь к файлу</param>
+        /// <param name="errorMsg">Сообщение с ошибкой</param>
+        public abstract void MoveTo(string newPath, ref string errorMsg);
     }
     internal class FileModel : FileSystemItemModel
     {
@@ -113,6 +120,26 @@ namespace FileManager2._0
             catch (ArgumentException)
             {
                 errorMsg = $"Путь к директории {newName} содержит недопустимые символы";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                errorMsg = $"Нет доступа к директории {FullName}";
+            }
+        }
+
+        public override void MoveTo(string newPath, ref string errorMsg)
+        {
+            try
+            {
+                _File.MoveTo(newPath);
+            }
+            catch (IOException)
+            {
+                errorMsg = $"Директория {newPath} уже существует";
+            }
+            catch (ArgumentException)
+            {
+                errorMsg = $"Путь к директории {newPath} содержит недопустимые символы";
             }
             catch (UnauthorizedAccessException)
             {
@@ -356,6 +383,26 @@ namespace FileManager2._0
             catch (ArgumentException)
             {
                 errorMsg = $"Путь к директории {newName} содержит недопустимые символы";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                errorMsg = $"Нет доступа к директории {FullName}";
+            }
+        }
+
+        public override void MoveTo(string newPath, ref string errorMsg)
+        {
+            try
+            {
+                _Directory.MoveTo(newPath);
+            }
+            catch (IOException)
+            {
+                errorMsg = $"Директория {newPath} уже существует";
+            }
+            catch (ArgumentException)
+            {
+                errorMsg = $"Путь к директории {newPath} содержит недопустимые символы";
             }
             catch (UnauthorizedAccessException)
             {

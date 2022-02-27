@@ -207,6 +207,7 @@ namespace FileManager2._0
             this.MoveToolStripMenuItem.Name = "MoveToolStripMenuItem";
             this.MoveToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
             this.MoveToolStripMenuItem.Text = "Переместить";
+            this.MoveToolStripMenuItem.Click += new System.EventHandler(this.MoveToolStripMenuItem_Click);
             // 
             // RemoveToolStripMenuItem
             // 

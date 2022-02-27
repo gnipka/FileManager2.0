@@ -1,13 +1,8 @@
 ﻿using FileManager2._0.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FileManager2._0
@@ -180,6 +175,7 @@ namespace FileManager2._0
 
             CopyForm copyForm = new CopyForm(fileName);
             copyForm.Show();
+            ChangeDataGrid();
         }
 
         private void RemoveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -223,6 +219,16 @@ namespace FileManager2._0
 
             RenameForm renameForm = new RenameForm(fileName);
             renameForm.Show();
+            ChangeDataGrid();
+        }
+
+        private void MoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fileName = Path.Combine(_Directory.FullName, clickedCell.Value.ToString());
+
+            MoveForm moveForm = new MoveForm(fileName);
+            moveForm.Show();
+            ChangeDataGrid();
         }
     }
 }
