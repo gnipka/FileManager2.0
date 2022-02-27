@@ -15,6 +15,17 @@ namespace FileManager2._0
     }
     internal abstract class FileSystemItemModel
     {
+        /// <summary>
+        /// Удаление
+        /// </summary>
+        /// <param name="errorMsg">Сообщение об ошибке</param>
+        public abstract void Remove(ref string errorMsg);
+
+        /// <summary>
+        /// Переименование
+        /// </summary>
+        /// <param name="newName">Новое имя файла</param>
+        public abstract void Rename(string newName, ref string errorMsg);
     }
     internal class FileModel : FileSystemItemModel
     {
@@ -22,13 +33,20 @@ namespace FileManager2._0
         public string Name => _File.Name;
         public long Size => _File.Length;
         public DateTime CreationTime => _File.CreationTime;
+        public string DirectoryName => Path.GetDirectoryName(FullName);
         public string FullName => _File.FullName;
         public string Extension => _File.Extension;
         public bool Exist => _File.Exists;
 
 
         public FileModel(string FilePath) : this(new FileInfo(FilePath)) { }
+        public FileModel(FileInfo File) => _File = File;
 
+        /// <summary>
+        /// Копирование файла
+        /// </summary>
+        /// <param name="destFileName">Место, куда копируется файл</param>
+        /// <param name="errorMsg">Сообщение об ошибке</param>
         public void Copy(string destFileName, out string errorMsg)
         {
             try
@@ -61,7 +79,8 @@ namespace FileManager2._0
                 errorMsg = "Заданные параметры имеют недопустимый формат";
             }
         }
-        public void Remove(ref string errorMsg)
+
+        public override void Remove(ref string errorMsg)
         {
             try
             {
@@ -81,7 +100,26 @@ namespace FileManager2._0
             }
         }
 
-        public FileModel(FileInfo File) => _File = File;
+        public override void Rename(string newName, ref string errorMsg)
+        {
+            try
+            {
+                _File.MoveTo(DirectoryName + "\\" + newName);
+            }
+            catch (IOException)
+            {
+                errorMsg = $"Директория {newName} уже существует";
+            }
+            catch (ArgumentException)
+            {
+                errorMsg = $"Путь к директории {newName} содержит недопустимые символы";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                errorMsg = $"Нет доступа к директории {FullName}";
+            }
+        }
+
         /// <summary>
         /// Проверка текстовый ли файл
         /// </summary>
@@ -101,47 +139,52 @@ namespace FileManager2._0
                     );
             }
         }
+
         /// <summary>
         /// Возвращает количество слов
         /// </summary>
         /// <returns></returns>
         public long GetCountWord()
         {
-            return File.ReadAllText(_File.FullName).
+            return File.ReadAllText(FullName).
                 Split(" ,.!?';:\"\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).
                 Where(x => !x.Any(Char.IsDigit)).Count();
         }
+
         /// <summary>
         /// Возвращает количество строк
         /// </summary>
         /// <returns></returns>
         public long GetCountString()
         {
-            return File.ReadAllLines(_File.FullName).Length;
+            return File.ReadAllLines(FullName).Length;
         }
+
         /// <summary>
         /// Возвращает количество абзацев
         /// </summary>
         /// <returns></returns>
         public long GetCountParagraph()
         {
-            return Regex.Matches(File.ReadAllText(_File.FullName), @"\r?\n\s*\r?\n\s*?\S+").Count + 1;
+            return Regex.Matches(File.ReadAllText(FullName), @"\r?\n\s*\r?\n\s*?\S+").Count + 1;
         }
+
         /// <summary>
         /// Возвращает количество сиволов с пробелом
         /// </summary>
         /// <returns></returns>
         public long GetCountSymbols()
         {
-            return File.ReadAllText(_File.FullName).Count();
+            return File.ReadAllText(FullName).Count();
         }
+
         /// <summary>
         /// Возвращает количество символов без пробела
         /// </summary>
         /// <returns></returns>
         public long GetCountSymbolsWithoutGap()
         {
-            return File.ReadAllText(_File.FullName).Count() - File.ReadAllText(_File.FullName).Count(c => c == ' ');
+            return File.ReadAllText(FullName).Count() - File.ReadAllText(FullName).Count(c => c == ' ');
         }
     }
     internal class DirectoryModel : FileSystemItemModel
@@ -230,8 +273,13 @@ namespace FileManager2._0
                         throw new InvalidOperationException("Неподдерживаемый тип данных " + item.GetType());
                 }
         }
-
-        public void Copy(string destPath, ref string errorMsg, string sourceDir= null)
+        /// <summary>
+        /// Копирование директории
+        /// </summary>
+        /// <param name="destPath">Место, куда копируется директория</param>
+        /// <param name="errorMsg">Сообщение об ошибке</param>
+        /// <param name="sourceDir">Директории, откуда происходит копирование</param>
+        public void Copy(string destPath, ref StringBuilder builder, string sourceDir= null)
         {
             if (sourceDir is null)
             {
@@ -247,35 +295,35 @@ namespace FileManager2._0
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    errorMsg = "Нет доступа к директории для записи файла";
+                    builder.Append($"Нет доступа к директории для записи файла {s2}");
                 }
                 catch (ArgumentException)
                 {
-                    errorMsg = "Все поля должны быть заполнены";
+                    builder.Append("Все поля должны быть заполнены");
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    errorMsg = "Указан недопустимый путь";
+                    builder.Append("Указан недопустимый путь");
                 }
                 catch (FileNotFoundException)
                 {
-                    errorMsg = "Не удалось найти " + FullName;
+                    builder.Append("Не удалось найти " + FullName);
                 }
                 catch (IOException)
                 {
-                    errorMsg = s2 + " существует";
+                    builder.Append(s2 + " существует");
                 }
                 catch (NotSupportedException)
                 {
-                    errorMsg = "Заданные параметры имеют недопустимый формат";
+                    builder.Append("Заданные параметры имеют недопустимый формат");
                 }
             }
             foreach (string s in Directory.GetDirectories(sourceDir))
             {
-                Copy(s, ref errorMsg, destPath + "\\" + Path.GetFileName(s));
+                Copy(s, ref builder, destPath + "\\" + Path.GetFileName(s));
             }
         }
-        public void Remove(ref string errorMsg)
+        public override void Remove(ref string errorMsg)
         {
             try
             {
@@ -288,6 +336,26 @@ namespace FileManager2._0
             catch (IOException)
             {
                 errorMsg = $"Директория {FullName} используется системой";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                errorMsg = $"Нет доступа к директории {FullName}";
+            }
+        }
+
+        public override void Rename(string newName, ref string errorMsg)
+        {
+            try
+            {
+                _Directory.MoveTo(DirectoryName + "\\" + newName);
+            }
+            catch (IOException)
+            {
+                errorMsg = $"Директория {newName} уже существует";
+            }
+            catch (ArgumentException)
+            {
+                errorMsg = $"Путь к директории {newName} содержит недопустимые символы";
             }
             catch (UnauthorizedAccessException)
             {

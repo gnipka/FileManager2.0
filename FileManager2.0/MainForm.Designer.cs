@@ -138,7 +138,6 @@ namespace FileManager2._0
             this.DirsTable.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DirsTable_CellMouseClick);
             this.DirsTable.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DirsTable_CellMouseDoubleClick);
             this.DirsTable.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DirsTable_CellMouseDown);
-            this.DirsTable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DirsTable_MouseClick);
             // 
             // Column1
             // 
@@ -187,31 +186,32 @@ namespace FileManager2._0
             this.MoveToolStripMenuItem,
             this.RemoveToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(215, 132);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(241, 165);
             // 
             // RenameToolStripMenuItem
             // 
             this.RenameToolStripMenuItem.Name = "RenameToolStripMenuItem";
-            this.RenameToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
+            this.RenameToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
             this.RenameToolStripMenuItem.Text = "Переименовать";
+            this.RenameToolStripMenuItem.Click += new System.EventHandler(this.RenameToolStripMenuItem_Click);
             // 
             // CopyToolStripMenuItem
             // 
             this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
-            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
+            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
             this.CopyToolStripMenuItem.Text = "Копировать";
             this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
             // MoveToolStripMenuItem
             // 
             this.MoveToolStripMenuItem.Name = "MoveToolStripMenuItem";
-            this.MoveToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
+            this.MoveToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
             this.MoveToolStripMenuItem.Text = "Переместить";
             // 
             // RemoveToolStripMenuItem
             // 
             this.RemoveToolStripMenuItem.Name = "RemoveToolStripMenuItem";
-            this.RemoveToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
+            this.RemoveToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
             this.RemoveToolStripMenuItem.Text = "Удалить";
             this.RemoveToolStripMenuItem.Click += new System.EventHandler(this.RemoveToolStripMenuItem_Click);
             // 

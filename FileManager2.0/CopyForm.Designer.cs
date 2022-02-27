@@ -82,7 +82,6 @@ namespace FileManager2._0
             this.DestFile.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.DestFile.Size = new System.Drawing.Size(638, 31);
             this.DestFile.TabIndex = 5;
-            this.DestFile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DestFile_MouseClick);
             // 
             // CopyForm
             // 

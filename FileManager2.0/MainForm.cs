@@ -15,18 +15,22 @@ namespace FileManager2._0
     public partial class MainForm : Form
     {
         private DirectoryModel _Directory;
+
         /// <summary>
         /// Стандартный путь при открытии
         /// </summary>
         private string _Path => Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+
         /// <summary>
-        /// Словарь с ключом - путь к файлу, и значением исконкой этого файла
+        /// Словарь с ключом - путь к файлу, и значением иконкой этого файла
         /// </summary>
         private Dictionary<string, Icon> _IconsFile;
+
         /// <summary>
         /// Словарь с ключом - путь к директории, и значением иконка папки(из ресурсов)
         /// </summary>
         private Dictionary<string, Image> _IconsDir;
+
         DataGridViewCell clickedCell;
 
         public MainForm()
@@ -36,7 +40,7 @@ namespace FileManager2._0
             _Directory = new DirectoryModel(_Path);
             buttonDown.FlatAppearance.BorderSize = 0;
             buttonDown.FlatStyle = FlatStyle.Flat;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             UpdateInfo();
         }
 
@@ -73,6 +77,7 @@ namespace FileManager2._0
             DirsTable.Columns[0].Width = 50;
             DirsTable.Update();
         }
+
         public void ChangeInfoAboutDir()
         {
             var text = $"Расположение: {_Directory.FullName} {Environment.NewLine} Размер папки: {_Directory.Size / 1024} Кб" +
@@ -80,12 +85,14 @@ namespace FileManager2._0
                 $"{Environment.NewLine} Количество файлов: {_Directory.CountFile}";
             InfoDir.Text = text;
         }
+
         public void UpdateInfo()
         {
             FilePath.Text = _Directory.FullName;
             ChangeDataGrid();
             ChangeInfoAboutDir();
         }
+
         private void DirsTable_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
@@ -99,15 +106,8 @@ namespace FileManager2._0
 
         private void buttonDown_Click(object sender, EventArgs e)
         {
-            try
-            {
-                _Directory = new DirectoryModel(_Directory.DirectoryName);
-                UpdateInfo();
-            }
-            catch
-            {
-
-            }
+            _Directory = new DirectoryModel(_Directory.DirectoryName);
+            UpdateInfo();
         }
 
         private void DirsTable_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -157,27 +157,18 @@ namespace FileManager2._0
             ChangeDataGrid(Mask.Text.Trim());
         }
 
-        private void DirsTable_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void DirsTable_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // Ignore if a column or row header is clicked
             if (e.RowIndex != -1 && e.ColumnIndex != -1)
             {
                 if (e.Button == MouseButtons.Right)
                 {
                     clickedCell = (sender as DataGridView).Rows[e.RowIndex].Cells[1];
 
-                    // Here you can do whatever you want with the cell
-                    this.DirsTable.CurrentCell = clickedCell;  // Select the clicked cell, for instance
+                    this.DirsTable.CurrentCell = clickedCell;
 
-                    // Get mouse position relative to the vehicles grid
                     var relativeMousePosition = DirsTable.PointToClient(Cursor.Position);
 
-                    // Show the context menu
                     this.contextMenuStrip1.Show(DirsTable, relativeMousePosition);
                 }
             }
@@ -199,7 +190,7 @@ namespace FileManager2._0
                 var file = new FileModel(fileName);
                 string errorMsg = null;
                 file.Remove(ref errorMsg);
-                if(errorMsg is null)
+                if (errorMsg is null)
                 {
                     MessageBox.Show($"Файл успешно удален!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -224,6 +215,14 @@ namespace FileManager2._0
                 }
                 ChangeDataGrid();
             }
+        }
+
+        private void RenameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fileName = Path.Combine(_Directory.FullName, clickedCell.Value.ToString());
+
+            RenameForm renameForm = new RenameForm(fileName);
+            renameForm.Show();
         }
     }
 }
