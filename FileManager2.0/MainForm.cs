@@ -239,5 +239,10 @@ namespace FileManager2._0
             createDirForm.Show();
             ChangeDataGrid();
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
