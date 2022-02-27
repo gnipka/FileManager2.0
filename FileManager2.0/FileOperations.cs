@@ -131,7 +131,7 @@ namespace FileManager2._0
         {
             try
             {
-                _File.MoveTo(newPath);
+                _File.MoveTo(newPath + "\\" + Name);
             }
             catch (IOException)
             {
@@ -394,7 +394,7 @@ namespace FileManager2._0
         {
             try
             {
-                _Directory.MoveTo(newPath);
+                _Directory.MoveTo(newPath + "\\" + Name);
             }
             catch (IOException)
             {
@@ -403,6 +403,27 @@ namespace FileManager2._0
             catch (ArgumentException)
             {
                 errorMsg = $"Путь к директории {newPath} содержит недопустимые символы";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                errorMsg = $"Нет доступа к директории {FullName}";
+            }
+        }
+
+        public void CreateDir(string newDir, ref string errorMsg)
+        {
+            string pathNewDir = FullName + "\\" + newDir;
+            try
+            {
+                Directory.CreateDirectory(pathNewDir);
+            }
+            catch (IOException)
+            {
+                errorMsg = $"Директория {pathNewDir} уже существует или указан недопустимый путь";
+            }
+            catch (ArgumentException)
+            {
+                errorMsg = $"Путь к директории {pathNewDir} содержит недопустимые символы";
             }
             catch (UnauthorizedAccessException)
             {

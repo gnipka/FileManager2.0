@@ -47,6 +47,7 @@ namespace FileManager2._0
             this.CopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddDir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DirsTable)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -186,41 +187,54 @@ namespace FileManager2._0
             this.MoveToolStripMenuItem,
             this.RemoveToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(241, 165);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(215, 132);
             // 
             // RenameToolStripMenuItem
             // 
             this.RenameToolStripMenuItem.Name = "RenameToolStripMenuItem";
-            this.RenameToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.RenameToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
             this.RenameToolStripMenuItem.Text = "Переименовать";
             this.RenameToolStripMenuItem.Click += new System.EventHandler(this.RenameToolStripMenuItem_Click);
             // 
             // CopyToolStripMenuItem
             // 
             this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
-            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
             this.CopyToolStripMenuItem.Text = "Копировать";
             this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
             // MoveToolStripMenuItem
             // 
             this.MoveToolStripMenuItem.Name = "MoveToolStripMenuItem";
-            this.MoveToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.MoveToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
             this.MoveToolStripMenuItem.Text = "Переместить";
             this.MoveToolStripMenuItem.Click += new System.EventHandler(this.MoveToolStripMenuItem_Click);
             // 
             // RemoveToolStripMenuItem
             // 
             this.RemoveToolStripMenuItem.Name = "RemoveToolStripMenuItem";
-            this.RemoveToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.RemoveToolStripMenuItem.Size = new System.Drawing.Size(214, 32);
             this.RemoveToolStripMenuItem.Text = "Удалить";
             this.RemoveToolStripMenuItem.Click += new System.EventHandler(this.RemoveToolStripMenuItem_Click);
+            // 
+            // AddDir
+            // 
+            this.AddDir.BackgroundImage = global::FileManager2._0.Properties.Resources.plus_icon_icons_com_61187;
+            this.AddDir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.AddDir.ForeColor = System.Drawing.SystemColors.Control;
+            this.AddDir.Location = new System.Drawing.Point(41, 78);
+            this.AddDir.Name = "AddDir";
+            this.AddDir.Size = new System.Drawing.Size(34, 34);
+            this.AddDir.TabIndex = 10;
+            this.AddDir.UseVisualStyleBackColor = true;
+            this.AddDir.Click += new System.EventHandler(this.AddDir_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(925, 611);
+            this.Controls.Add(this.AddDir);
             this.Controls.Add(this.SearchMask);
             this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.GetDir);
@@ -259,6 +273,7 @@ namespace FileManager2._0
         private System.Windows.Forms.ToolStripMenuItem MoveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RemoveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CopyToolStripMenuItem;
+        private System.Windows.Forms.Button AddDir;
     }
 }
 

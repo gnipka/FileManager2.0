@@ -44,7 +44,7 @@ namespace FileManager2._0
 
                 if (errorMsg is null)
                 {
-                    MessageBox.Show($"Директория успешно перемещен", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Директория успешно перемещена", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                 }
 

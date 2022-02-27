@@ -79,5 +79,15 @@ namespace FileManager2._0.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap plus_icon_icons_com_61187 {
+            get {
+                object obj = ResourceManager.GetObject("plus_icon-icons.com_61187", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

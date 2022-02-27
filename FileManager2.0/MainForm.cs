@@ -35,6 +35,8 @@ namespace FileManager2._0
             _Directory = new DirectoryModel(_Path);
             buttonDown.FlatAppearance.BorderSize = 0;
             buttonDown.FlatStyle = FlatStyle.Flat;
+            AddDir.FlatAppearance.BorderSize = 0;
+            AddDir.FlatStyle = FlatStyle.Flat;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             UpdateInfo();
         }
@@ -228,6 +230,13 @@ namespace FileManager2._0
 
             MoveForm moveForm = new MoveForm(fileName);
             moveForm.Show();
+            ChangeDataGrid();
+        }
+
+        private void AddDir_Click(object sender, EventArgs e)
+        {
+            CreateDirForm createDirForm = new CreateDirForm(_Directory.FullName);
+            createDirForm.Show();
             ChangeDataGrid();
         }
     }
